@@ -12,15 +12,11 @@ export async function registerUser(params) {
 }
 
 // 测试登录
-export async function login(params) {
-  // params 来自于effects中参数
-  return request(`/api/api/users/login`, {
-    // 请求方式
+export const login = async params =>
+  request(`/api/api/users/login`, {
     method: 'POST',
-    // 用data包裹参数是官方指定写法，如果data有参数umi-request会默认读取data里面参数。
     data: params,
   });
-}
 
 // 获取get接口
 export async function getUser(params) {

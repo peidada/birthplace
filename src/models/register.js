@@ -15,9 +15,10 @@ export default {
   },
 
   effects: {
-    *registerUser({ payload: todo }, { call, put }) {
+    *registerUser({ payload }, { call, put }) {
+      console.log(payload, 'payload');
       // eslint-disable-line
-      const response = yield call(services.registerUser, todo);
+      const response = yield call(services.registerUser, payload);
       // console.log(response);
       if (response.data.code == 200) {
         // yield put({

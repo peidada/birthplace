@@ -4,15 +4,22 @@ import styles from './login.less';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-class Login extends React.Component {
-  constructor(props) {
+interface Props {
+  dispatch: any;
+}
+interface Login {
+  propTypes: any;
+}
+
+class Login extends React.Component<Props> {
+  constructor(props: any) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {}
 
-  onFinish = values => {
+  onFinish = (values: any) => {
     console.log('Success:', values);
 
     this.props.dispatch({
@@ -21,7 +28,7 @@ class Login extends React.Component {
     });
   };
 
-  onFinishFailed = errorInfo => {
+  onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
   request = () => {
@@ -87,6 +94,6 @@ Login.propTypes = {
   // item:PropTypes.object.isRequired
 };
 
-export default connect(({ loginModel }) => ({
+export default connect(({ loginModel }: any) => ({
   loginModel,
 }))(Login);

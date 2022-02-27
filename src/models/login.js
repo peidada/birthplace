@@ -16,9 +16,11 @@ export default {
   },
 
   effects: {
-    *login({ payload: todo }, { call, put }) {
+    *login({ payload }, { call, put }) {
       // eslint-disable-line
-      const response = yield call(services.login, todo);
+      console.log(111, 'response');
+
+      const response = yield call(services.login, payload);
       // console.log(response);
       if (response.data.code == 200) {
         // yield put({
