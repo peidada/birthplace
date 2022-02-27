@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import routes from './src/router';
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -45,11 +46,13 @@ export default defineConfig({
   request: {
     dataField: 'data',
   },
-  routes: [
-    { path: '/', component: '@/pages/login' },
-    { path: '/register', component: '@/pages/register' },
-    { path: '/users', component: '@/pages/users' },
-  ],
+  routes,
+  mock: {},
+  // routes: [
+  //   { path: '/', component: '@/pages/login' },
+  //   { path: '/register', component: '@/pages/register' },
+  //   { path: '/users', component: '@/pages/users' },
+  // ],
   targets: {
     //配置浏览器最低版本,比如兼容ie11
     ie: 11,
