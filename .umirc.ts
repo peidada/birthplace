@@ -5,7 +5,7 @@ export default defineConfig({
     type: 'none',
   },
 
-  links: [{ rel: 'icon', href: 'http://81.70.92.245/pictory/logo.ico' }],
+  // links: [{ rel: 'icon', href: 'http://81.70.92.245/pictory/logo.ico' }],
 
   title: 'The road of photography',
 
@@ -57,7 +57,7 @@ export default defineConfig({
   hash: true, //开启打包文件的hash值后缀,
   proxy: {
     '/api': {
-      target: 'http://81.70.92.245:3000/',
+      target: 'http://39.106.3.240:8070/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },

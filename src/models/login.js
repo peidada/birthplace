@@ -5,7 +5,6 @@ export default {
   namespace: 'loginModel',
 
   state: {
-    accessExpiredAt: '',
     token: '',
   },
 
@@ -21,26 +20,26 @@ export default {
       console.log(111, 'response');
 
       const response = yield call(services.login, payload);
-      // console.log(response);
-      if (response.data.code == 200) {
-        // yield put({
-        //   type: 'save',
-        //   payload: response.data,
-        // });
-        localStorage.setItem('Token', response.data.data.token);
-        history.push('/');
+      console.log('response', response);
+      if (response.code == 1) {
+        yield put({
+          type: 'save',
+          payload: response.data.token,
+        });
+        localStorage.setItem('Token', response.data.token);
+        history.push('/register');
       } else {
-        onError(response.data.msg);
+        onError(response.message);
       }
     },
   },
 
   reducers: {
     save(state, action) {
+      console.log(action);
       return {
         ...state,
-        accessExpiredAt: action.payload.data.accessExpiredAt,
-        token: action.payload.data.token,
+        token: action.payload,
       };
     },
   },

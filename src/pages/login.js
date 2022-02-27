@@ -16,7 +16,7 @@ class Login extends React.Component {
     console.log('Success:', values);
 
     this.props.dispatch({
-      type: 'loginModal/login',
+      type: 'loginModel/login',
       payload: values,
     });
   };
@@ -24,9 +24,7 @@ class Login extends React.Component {
   onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
-  request = () => {
-    console.log('request');
-  };
+
   render() {
     return (
       <div className={styles.login_div}>
@@ -72,7 +70,6 @@ class Login extends React.Component {
               type="primary"
               htmlType="submit"
               className={styles['login-form-button']}
-              onClick={this.request}
             >
               登录
             </Button>

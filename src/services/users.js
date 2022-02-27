@@ -13,7 +13,7 @@ export async function registerUser(params) {
 
 // 测试登录
 export const login = async params =>
-  request(`/api/api/users/login`, {
+  request(`/api/login`, {
     method: 'POST',
     data: params,
   });
