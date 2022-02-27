@@ -45,10 +45,13 @@ export default defineConfig({
   request: {
     dataField: 'data',
   },
+  /* 
+    exact: 表示是否严格匹配，即 location 是否和 path 完全对应上
+  */
   routes: [
-    { path: '/', component: '@/pages/login' },
-    { path: '/register', component: '@/pages/register' },
-    { path: '/users', component: '@/pages/users' },
+    { exact: true, path: '/', component: '@/pages/login' },
+    { exact: true, path: '/register', component: '@/pages/register' },
+    { exact: true, path: '/users', component: '@/pages/users' },
   ],
   targets: {
     //配置浏览器最低版本,比如兼容ie11

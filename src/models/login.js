@@ -36,7 +36,6 @@ export default {
 
   reducers: {
     save(state, action) {
-      console.log(action);
       return {
         ...state,
         token: action.payload,

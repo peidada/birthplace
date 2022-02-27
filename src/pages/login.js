@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import styles from './login.less';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link } from 'umi';
 
 class Login extends React.Component {
   constructor(props) {
@@ -60,9 +61,9 @@ class Login extends React.Component {
             />
           </Form.Item>
           <Form.Item>
-            <a className={styles['login-form-forgot']} href="/register">
+            <Link className={styles['login-form-forgot']} to="/register">
               注册
-            </a>
+            </Link>
           </Form.Item>
 
           <Form.Item>
