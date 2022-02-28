@@ -7,7 +7,7 @@ export default defineConfig({
 
   // links: [{ rel: 'icon', href: 'http://81.70.92.245/pictory/logo.ico' }],
 
-  title: 'The road of photography',
+  title: 'birthplace',
 
   //开启按需加载
   dynamicImport: {},
@@ -41,7 +41,7 @@ export default defineConfig({
   //样式生效必须写在styles里面
   styles: ['https://cdnjs.cloudflare.com/ajax/libs/antd/4.8.2/antd.min.css'],
   dva: {},
-  antd: false, //启用后自动配置 babel-plugin-import实现antd按需加载  false 表示不开启  {} 表示开启
+  antd: {}, //启用后自动配置 babel-plugin-import实现antd按需加载  false 表示不开启  {} 表示开启
   request: {
     dataField: 'data',
   },
@@ -49,10 +49,21 @@ export default defineConfig({
     exact: 表示是否严格匹配，即 location 是否和 path 完全对应上
   */
   routes: [
-    { exact: true, path: '/', component: '@/pages/index' },
-    { exact: true, path: '/login', component: '@/pages/login/login' },
-    { exact: true, path: '/register', component: '@/pages/register/register' },
-    { exact: true, path: '/users', component: '@/pages/users/users' },
+    {
+      exact: false,
+      path: '/',
+      component: '@/layouts/index',
+      routes: [
+        { exact: true, path: '/', component: '@/pages/index' },
+        { exact: true, path: '/login', component: '@/pages/login/login' },
+        {
+          exact: true,
+          path: '/register',
+          component: '@/pages/register/register',
+        },
+        { exact: true, path: '/users', component: '@/pages/users/users' },
+      ],
+    },
   ],
   targets: {
     //配置浏览器最低版本,比如兼容ie11
@@ -61,7 +72,7 @@ export default defineConfig({
   hash: true, //开启打包文件的hash值后缀,
   proxy: {
     '/api': {
-      target: 'http://39.106.3.240:8070/',
+      target: 'http://39.106.3.240:8080/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },

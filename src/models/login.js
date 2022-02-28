@@ -27,7 +27,7 @@ export default {
           payload: response.data.token,
         });
         localStorage.setItem('Token', response.data.token);
-        history.push('/register');
+        history.push('/');
       } else {
         onError(response.message);
       }
