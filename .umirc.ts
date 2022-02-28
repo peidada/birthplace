@@ -26,12 +26,12 @@ export default defineConfig({
     });
   },
   //配置 externals 还能减小编译消耗
-  externals: {
-    react: 'window.React',
-    'react-dom': 'window.ReactDOM',
-    moment: 'window.moment',
-    antd: 'window.antd',
-  },
+  // externals: {
+  //   react: 'window.React',
+  //   'react-dom': 'window.ReactDOM',
+  //   moment: 'window.moment',
+  //   antd: 'window.antd',
+  // },
   scripts: [
     'https://cdn.bootcdn.net/ajax/libs/react/17.0.1/umd/react.development.min.js',
     'https://cdn.bootcdn.net/ajax/libs/react-dom/17.0.1/umd/react-dom.production.min.js',
@@ -49,9 +49,10 @@ export default defineConfig({
     exact: 表示是否严格匹配，即 location 是否和 path 完全对应上
   */
   routes: [
-    { exact: true, path: '/', component: '@/pages/login' },
-    { exact: true, path: '/register', component: '@/pages/register' },
-    { exact: true, path: '/users', component: '@/pages/users' },
+    { exact: true, path: '/', component: '@/pages/index' },
+    { exact: true, path: '/login', component: '@/pages/login/login' },
+    { exact: true, path: '/register', component: '@/pages/register/register' },
+    { exact: true, path: '/users', component: '@/pages/users/users' },
   ],
   targets: {
     //配置浏览器最低版本,比如兼容ie11
