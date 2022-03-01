@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message, Select } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { connect } from 'dva';
 import styles from './register.less';
+import { history } from 'umi';
 
 const layout = {
   labelCol: { span: 8 },
@@ -46,13 +47,14 @@ class Register extends Component {
   // }
 
   back = () => {
-    window.location.href = '/';
+    history.push('/login');
   };
 
   render() {
     const { Item } = Form;
     return (
       <div className={styles.register_div}>
+        <div className={styles.register_title}>星图变幻莫测，探测之</div>
         <Form
           ref={this.formRef}
           onFinish={this.onFinish}
@@ -60,16 +62,9 @@ class Register extends Component {
           {...layout}
         >
           <Item
-            name="username"
-            label="Username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input />
-          </Item>
-          <Item
-            name="account"
-            label="Account"
-            rules={[{ required: true, message: 'Please input your account!' }]}
+            name="mobile"
+            label="Mobile"
+            rules={[{ required: true, message: 'Please input your Mobile!' }]}
           >
             <Input />
           </Item>
@@ -88,16 +83,6 @@ class Register extends Component {
             ]}
           >
             <Input.Password />
-          </Item>
-          <Item
-            name="country"
-            label="Country"
-            rules={[{ required: true, message: 'Please select your country!' }]}
-          >
-            <Select placeholder="Select country" allowClear>
-              <Option value="CN">CN</Option>
-              <Option value="USA">USA</Option>
-            </Select>
           </Item>
           <Item>
             <Button
