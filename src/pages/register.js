@@ -8,7 +8,7 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const { Option } = Select;
-class register extends Component {
+class Register extends Component {
   // 通过 Ref 来获取 Form 实例
   // 同样的，你可以不使用createRef()方法而用this.refs.XXX也可以
   formRef = React.createRef();
@@ -123,10 +123,10 @@ class register extends Component {
   }
 }
 
-register.propTypes = {
+Register.propTypes = {
   // item:PropTypes.object.isRequired
 };
 
 export default connect(({ registerModel }) => ({
   registerModel,
-}))(register);
+}))(Register);
