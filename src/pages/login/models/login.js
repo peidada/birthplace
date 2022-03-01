@@ -1,4 +1,4 @@
-import * as services from '../services/users';
+import * as services from '@/services/users';
 import { history } from 'umi';
 
 export default {
