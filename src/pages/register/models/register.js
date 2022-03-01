@@ -1,11 +1,12 @@
 import * as services from '@/services/users';
 import { history } from 'umi';
+import { message } from 'antd';
 
 export default {
   namespace: 'registerModel',
 
   state: {
-    data: {},
+    code: '', //验证码
   },
 
   subscriptions: {
@@ -17,27 +18,34 @@ export default {
   effects: {
     *registerUser({ payload }, { call, put }) {
       console.log(payload, 'payload');
-      // eslint-disable-line
       const response = yield call(services.registerUser, payload);
-      // console.log(response);
-      if (response.data.code == 200) {
-        // yield put({
-        //   type: 'save',
-        //   payload: response.data,
-        // });
-        // history.push('/');
-        onSuccess(response.data.data.msg);
+      if (response.code == 1) {
+        history.push('/login');
+        message.success('注册成功');
       } else {
-        onError(response.data.msg);
+        message.error(response.message);
+      }
+    },
+    *getCode({ payload }, { call, put }) {
+      const response = yield call(services.getCode, payload);
+      if (response.code == 1) {
+        yield put({
+          type: 'saveCode',
+          payload: response.data,
+        });
+        message.success('获取验证码成功');
+      } else {
+        message.error(response.message);
       }
     },
   },
 
   reducers: {
-    save(state, action) {
+    saveCode(state, action) {
+      console.log(action);
       return {
         ...state,
-        data: action.payload.data.data,
+        code: action.payload,
       };
     },
   },
