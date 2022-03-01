@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './login.less';
 import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { PhoneOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'umi';
 
 class Login extends React.Component {
@@ -38,14 +38,14 @@ class Login extends React.Component {
           onFinishFailed={e => this.onFinishFailed(e)}
         >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your Username!' }]}
+            name="mobile"
+            rules={[{ required: true, message: 'Please input your Mobile!' }]}
           >
             <Input
               prefix={
-                <UserOutlined className={styles['site-form-item-icon']} />
+                <PhoneOutlined className={styles['site-form-item-icon']} />
               }
-              placeholder="Username"
+              placeholder="Mobile"
             />
           </Form.Item>
           <Form.Item

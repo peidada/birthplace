@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message, Select } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { connect } from 'dva';
 import styles from './register.less';
+import { history } from 'umi';
 
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
-const { Option } = Select;
 class register extends Component {
   // 通过 Ref 来获取 Form 实例
   // 同样的，你可以不使用createRef()方法而用this.refs.XXX也可以
@@ -46,13 +46,14 @@ class register extends Component {
   // }
 
   back = () => {
-    window.location.href = '/';
+    history.push('/login');
   };
 
   render() {
     const { Item } = Form;
     return (
       <div className={styles.register_div}>
+        <div className={styles.register_title}>星图变幻莫测，探测之</div>
         <Form
           ref={this.formRef}
           onFinish={this.onFinish}
@@ -60,16 +61,9 @@ class register extends Component {
           {...layout}
         >
           <Item
-            name="username"
-            label="Username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input />
-          </Item>
-          <Item
-            name="account"
-            label="Account"
-            rules={[{ required: true, message: 'Please input your account!' }]}
+            name="mobile"
+            label="Mobile"
+            rules={[{ required: true, message: 'Please input your Mobile!' }]}
           >
             <Input />
           </Item>
@@ -88,16 +82,6 @@ class register extends Component {
             ]}
           >
             <Input.Password />
-          </Item>
-          <Item
-            name="country"
-            label="Country"
-            rules={[{ required: true, message: 'Please select your country!' }]}
-          >
-            <Select placeholder="Select country" allowClear>
-              <Option value="CN">CN</Option>
-              <Option value="USA">USA</Option>
-            </Select>
           </Item>
           <Item>
             <Button

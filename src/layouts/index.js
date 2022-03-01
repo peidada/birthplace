@@ -8,7 +8,7 @@ export default function(props) {
   const isLogin = window.localStorage.getItem('Token');
   const { pathname } = props.location;
 
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname === '/register') {
     return <SimpleLayout>{props.children}</SimpleLayout>;
   }
 
