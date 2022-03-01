@@ -27,7 +27,7 @@ export default {
           payload: response.data.token,
         });
         localStorage.setItem('Token', response.data.token);
-        history.push('/register');
+        history.push('/');
       } else {
         onError(response.message);
       }
@@ -36,7 +36,6 @@ export default {
 
   reducers: {
     save(state, action) {
-      console.log(action);
       return {
         ...state,
         token: action.payload,

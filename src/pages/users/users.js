@@ -16,17 +16,22 @@ class UsersPage extends React.Component {
 
   buttonClick = () => {
     console.log(process.env.NODE_ENV);
-    this.props.dispatch({
-      type: 'usersModel/getUser',
-      payload: 1,
-    });
+    // this.props.dispatch({
+    //   type: 'usersModel/getUser',
+    //   payload: 1,
+    // });
   };
 
   render() {
     return (
-      <Button size="small" type="ghost" onClick={e => this.buttonClick()}>
-        Start
-      </Button>
+      <div>
+        <Button size="small" type="ghost" onClick={e => this.buttonClick()}>
+          Start
+        </Button>
+        <span style={{ marginLeft: '20px' }}>
+          if !(window.localStorage.getItem('Token')) history.push('/login')
+        </span>
+      </div>
     );
   }
 }
