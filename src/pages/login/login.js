@@ -17,7 +17,7 @@ class Login extends React.Component {
     console.log('Success:', values);
 
     this.props.dispatch({
-      type: 'loginModel/login',
+      type: 'loginModel/loginP',
       payload: values,
     });
   };

@@ -3,13 +3,22 @@ import { Form, Input, Button, message } from 'antd';
 import { connect } from 'dva';
 import styles from './register.less';
 import { history } from 'umi';
+import { debounce } from 'lodash';
 
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
-const { Option } = Select;
 class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobile: '',
+      code: '',
+    };
+    this.mobileInput = debounce(this.mobileInput, 300);
+  }
+
   // 通过 Ref 来获取 Form 实例
   // 同样的，你可以不使用createRef()方法而用this.refs.XXX也可以
   formRef = React.createRef();
@@ -22,7 +31,11 @@ class Register extends Component {
     } else {
       this.props.dispatch({
         type: 'registerModel/registerUser',
-        payload: values,
+        payload: {
+          mobile: values.mobile,
+          password: values.password,
+          code: this.props.registerModel.code,
+        },
       });
     }
   };
@@ -46,8 +59,27 @@ class Register extends Component {
   //   }
   // }
 
+  mobileInput = value => {
+    console.log('value', value);
+    this.setState({
+      mobile: value,
+    });
+  };
+
   back = () => {
     history.push('/login');
+  };
+
+  getCode = () => {
+    this.props.dispatch({
+      type: 'registerModel/getCode',
+      payload: { mobile: this.state.mobile },
+    });
+  };
+
+  handleChangeMobile = e => {
+    e.persist();
+    this.mobileInput(e.target.value);
   };
 
   render() {
@@ -66,7 +98,10 @@ class Register extends Component {
             label="Mobile"
             rules={[{ required: true, message: 'Please input your Mobile!' }]}
           >
-            <Input />
+            <Input
+              onChange={this.handleChangeMobile}
+              value={this.state.mobile}
+            />
           </Item>
           <Item
             name="password"
@@ -98,6 +133,13 @@ class Register extends Component {
               className={styles.register_form_button_back}
             >
               Back
+            </Button>
+            <Button
+              type="primary"
+              onClick={this.getCode}
+              className={styles.register_form_button_code}
+            >
+              获取验证码
             </Button>
             {/* <Button type='link' onClick={this.getValues}>非 Submit 方式（不验证）</Button>
           <Button type='link' onClick={this.getValidateValues}>非 Submit 方式（验证）</Button> */}

@@ -1,5 +1,6 @@
 import * as services from '@/services/users';
 import { history } from 'umi';
+import { message } from 'antd';
 
 export default {
   namespace: 'usersModel',
@@ -20,7 +21,7 @@ export default {
       // eslint-disable-line
       const response = yield call(services.login, todo);
       // console.log(response);
-      if (response.data.code == 200) {
+      if (response.code == 1) {
         // yield put({
         //   type: 'save',
         //   payload: response.data,
@@ -28,11 +29,11 @@ export default {
         localStorage.setItem('Token', response.data.data.token);
         history.push('/');
       } else {
-        onError(response.data.msg);
+        message.error(response.data.msg);
       }
     },
     *getUser({ payload: id }, { call, put }) {
-      const response = yield call(services.getUser, id);
+      // const response = yield call(services.getUser, id);
     },
   },
 

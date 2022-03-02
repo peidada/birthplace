@@ -1,5 +1,6 @@
 import * as services from '@/services/users';
 import { history } from 'umi';
+import { message } from 'antd';
 
 export default {
   namespace: 'loginModel',
@@ -15,13 +16,9 @@ export default {
   },
 
   effects: {
-    *login({ payload }, { call, put }) {
-      // eslint-disable-line
-      console.log(111, 'response');
-
-      const response = yield call(services.login, payload);
-      console.log('response', response);
-      if (response.code == 1) {
+    *loginP({ payload }, { call, put }) {
+      const response = yield call(services.loginP, payload);
+      if (response.code === 1) {
         yield put({
           type: 'save',
           payload: response.data.token,
@@ -29,7 +26,7 @@ export default {
         localStorage.setItem('Token', response.data.token);
         history.push('/');
       } else {
-        onError(response.message);
+        message.error(response.message);
       }
     },
   },
