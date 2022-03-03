@@ -61,7 +61,7 @@ export default defineConfig({
           path: '/register',
           component: '@/pages/register/register',
         },
-        { exact: true, path: '/users', component: '@/pages/users/users' },
+        { exact: true, path: '/portal', component: '@/pages/portal/portal' },
       ],
     },
   ],

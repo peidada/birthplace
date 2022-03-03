@@ -1,4 +1,4 @@
-import * as services from '@/services/users';
+import * as services from '@/services/login';
 import { history } from 'umi';
 import { message } from 'antd';
 
