@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './portal.less';
 import { Button, message, Table } from 'antd';
+import AddRole from './component/addRole';
 
 class PortalPage extends React.Component {
   constructor(props) {
@@ -52,9 +53,7 @@ class PortalPage extends React.Component {
     ];
     return (
       <div>
-        <Button type="primary" onClick={e => this.addRole(e)}>
-          新增角色
-        </Button>
+        <AddRole></AddRole>
         <Table
           dataSource={roleData}
           columns={columns}
