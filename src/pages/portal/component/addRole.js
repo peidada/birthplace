@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Form, Input } from 'antd';
+import styles from './addRole.less';
 
 const AddRole = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,7 +28,22 @@ const AddRole = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <span>新增角色list</span>
+        <Form
+          name="role_form"
+          className={styles['role-form']}
+          initialValues={{ remember: true }}
+          onFinish={e => this.onFinish(e)}
+          onFinishFailed={e => this.onFinishFailed(e)}
+        >
+          <Form.Item
+            name="name"
+            rules={[
+              { required: true, message: 'Please input your Role Name!' },
+            ]}
+          >
+            <Input placeholder="请输入角色名称" />
+          </Form.Item>
+        </Form>
       </Modal>
     </div>
   );
