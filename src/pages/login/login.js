@@ -55,6 +55,8 @@ class Login extends React.Component {
   };
   render() {
     const { type, codeLoading } = this.state;
+    const { code } = this.props.getVertificationCode;
+    console.log(this.props.getVertificationCode, 'code');
     let loginType;
     if (type === '0') {
       loginType = (
@@ -77,7 +79,7 @@ class Login extends React.Component {
         >
           <Input
             prefix={<LockOutlined className={styles['site-form-item-icon']} />}
-            value={this.props.getVertificationCode.code}
+            value={code}
             placeholder="验证码"
             className={styles['vertificatoin-code-input']}
           />
