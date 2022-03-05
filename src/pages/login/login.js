@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 
 class Login extends React.Component {
   constructor(props) {
+    console.log(props, 'props');
     super(props);
     this.state = {
       type: '0',
@@ -76,6 +77,7 @@ class Login extends React.Component {
         >
           <Input
             prefix={<LockOutlined className={styles['site-form-item-icon']} />}
+            value={this.props.getVertificationCode.code}
             placeholder="验证码"
             className={styles['vertificatoin-code-input']}
           />
