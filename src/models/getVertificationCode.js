@@ -13,7 +13,6 @@ export default {
   },
   effects: {
     *getCode({ payload }, { call, put }) {
-      console.log(111, payload);
       const response = yield call(services.getCode, payload);
       if (response.code == 1) {
         yield put({
@@ -26,7 +25,7 @@ export default {
       }
     },
   },
-  reducer: {
+  reducers: {
     saveCode(state, action) {
       console.log(action);
       return {
