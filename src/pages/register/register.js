@@ -12,6 +12,7 @@ const layout = {
 class Register extends Component {
   constructor(props) {
     super(props);
+    console.log(props, 'props');
     this.state = {
       mobile: '',
       code: '',
@@ -34,7 +35,7 @@ class Register extends Component {
         payload: {
           mobile: values.mobile,
           password: values.password,
-          code: this.props.registerModel.code,
+          code: this.props.getVertificationCode.code,
         },
       });
     }
@@ -72,7 +73,7 @@ class Register extends Component {
 
   getCode = () => {
     this.props.dispatch({
-      type: 'registerModel/getCode',
+      type: 'getVertificationCode/getCode',
       payload: { mobile: this.state.mobile },
     });
   };
@@ -125,7 +126,7 @@ class Register extends Component {
               htmlType="submit"
               className={styles.register_form_button}
             >
-              Submit
+              注册
             </Button>
             <Button
               type="primary"
@@ -154,6 +155,7 @@ Register.propTypes = {
   // item:PropTypes.object.isRequired
 };
 
-export default connect(({ registerModel }) => ({
+export default connect(({ registerModel, getVertificationCode }) => ({
   registerModel,
+  getVertificationCode,
 }))(Register);
