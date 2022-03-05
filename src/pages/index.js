@@ -4,7 +4,7 @@ import { Redirect } from 'umi';
 export default () => (
   <Redirect
     to={{
-      pathname: '/users',
+      pathname: '/portal',
       state: {},
     }}
   />

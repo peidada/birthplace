@@ -24,9 +24,9 @@ export default props => {
         }}
       >
         <div className={styles['logo']}>birthplace</div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1" icon={<UserOutlined />}>
-            nav 1
+            角色管理
           </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />}>
             nav 2
