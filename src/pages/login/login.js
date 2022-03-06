@@ -87,7 +87,11 @@ class Login extends React.Component {
           onFinish={e => this.onFinish(e)}
           onFinishFailed={e => this.onFinishFailed(e)}
         >
-          <Radio.Group value={type} onChange={this.changeLoginType}>
+          <Radio.Group
+            value={type}
+            onChange={this.changeLoginType}
+            className={styles['login-radio']}
+          >
             <Radio.Button type="text" size="small" value="0">
               密码登录
             </Radio.Button>

@@ -2,22 +2,26 @@ import React, { Component } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { connect } from 'dva';
 import styles from './register.less';
-import { history } from 'umi';
+import { PhoneOutlined, LockOutlined } from '@ant-design/icons';
+import { Link } from 'umi';
 import { debounce } from 'lodash';
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
 class Register extends Component {
   constructor(props) {
     super(props);
-    console.log(props, 'props');
     this.state = {
+      codeLoading: false,
       mobile: '',
       code: '',
     };
-    this.mobileInput = debounce(this.mobileInput, 300);
+  }
+
+  /* props更新state */
+  static getDerivedStateFromProps(props) {
+    console.log(props);
+    return {
+      code: props.getVertificationCode.code,
+    };
   }
 
   // 通过 Ref 来获取 Form 实例
@@ -41,6 +45,10 @@ class Register extends Component {
     }
   };
 
+  onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
+  };
+
   // getValues = () => {
   //   // 得到 Form 实例
   //   const form = this.formRef.current
@@ -60,15 +68,15 @@ class Register extends Component {
   //   }
   // }
 
-  mobileInput = value => {
-    console.log('value', value);
-    this.setState({
-      mobile: value,
-    });
-  };
-
-  back = () => {
-    history.push('/login');
+  setMobile(e) {
+    debounce(() => {
+      this.setState({ mobile: e.target.value });
+    }, 300)();
+  }
+  changeMobile = e => {
+    e.persist();
+    console.log(e, 'e');
+    this.setMobile(e);
   };
 
   getCode = () => {
@@ -78,73 +86,92 @@ class Register extends Component {
     });
   };
 
-  handleChangeMobile = e => {
-    e.persist();
-    this.mobileInput(e.target.value);
-  };
-
   render() {
-    const { Item } = Form;
+    const { codeLoading, code, mobile } = this.state;
+    /* 重置code值 */
+    this.formRef.current?.setFieldsValue({ code: code });
     return (
       <div className={styles.register_div}>
         <div className={styles.register_title}>星图变幻莫测，探测之</div>
         <Form
+          name="normal_register"
           ref={this.formRef}
-          onFinish={this.onFinish}
-          className={styles.register_form}
-          {...layout}
+          className={styles['register-form']}
+          initialValues={{ code: code }}
+          onFinish={e => this.onFinish(e)}
+          onFinishFailed={e => this.onFinishFailed(e)}
         >
-          <Item
+          <Form.Item
             name="mobile"
-            label="Mobile"
             rules={[{ required: true, message: 'Please input your Mobile!' }]}
+            onChange={this.changeMobile}
           >
             <Input
-              onChange={this.handleChangeMobile}
-              value={this.state.mobile}
+              prefix={
+                <PhoneOutlined className={styles['site-form-item-icon']} />
+              }
+              value={mobile}
+              placeholder="Please input your Mobile"
             />
-          </Item>
-          <Item
+          </Form.Item>
+          <Form.Item
             name="password"
-            label="Password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
+            rules={[{ required: true, message: 'Please input your Password!' }]}
           >
-            <Input.Password />
-          </Item>
-          <Item
+            <Input
+              prefix={
+                <LockOutlined className={styles['site-form-item-icon']} />
+              }
+              placeholder="Please input your Password"
+            />
+          </Form.Item>
+          <Form.Item
             name="passwordAgain"
-            label="PasswordAgain"
             rules={[
-              { required: true, message: 'Please input your passwordAgain!' },
+              { required: true, message: 'Please input your PasswordAgain!' },
             ]}
           >
-            <Input.Password />
-          </Item>
-          <Item>
+            <Input
+              prefix={
+                <LockOutlined className={styles['site-form-item-icon']} />
+              }
+              placeholder="Please input your PasswordAgain"
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true, message: '必填项不能为空' }]}
+            name="code"
+          >
+            <Input
+              prefix={<LockOutlined className={['site-form-item-icon']} />}
+              placeholder="验证码"
+              className={styles['vertificatoin-code-input']}
+            />
+          </Form.Item>
+          <Form.Item className={styles['site-form-item-div']}>
             <Button
               type="primary"
-              htmlType="submit"
-              className={styles.register_form_button}
-            >
-              注册
-            </Button>
-            <Button
-              type="primary"
-              onClick={this.back}
-              className={styles.register_form_button_back}
-            >
-              Back
-            </Button>
-            <Button
-              type="primary"
+              className={styles['vertificatoin-code-button']}
+              loading={codeLoading}
               onClick={this.getCode}
-              className={styles.register_form_button_code}
             >
               获取验证码
             </Button>
-            {/* <Button type='link' onClick={this.getValues}>非 Submit 方式（不验证）</Button>
-          <Button type='link' onClick={this.getValidateValues}>非 Submit 方式（验证）</Button> */}
-          </Item>
+          </Form.Item>
+          <Form.Item>
+            <Link className={styles['register-form-forgot']} to="/login">
+              返回
+            </Link>
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles['register-form-button']}
+            >
+              注册
+            </Button>
+          </Form.Item>
         </Form>
       </div>
     );
