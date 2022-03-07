@@ -1,16 +1,14 @@
 import React from 'react';
 import { Layout, Menu, Dropdown, message } from 'antd';
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { history } from 'umi';
+import MenuList from './menu/index.js';
 import styles from './index.less';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 export default props => {
+  console.log(props);
   return (
     <Layout className={styles['app']}>
       <Sider
@@ -24,30 +22,17 @@ export default props => {
         }}
       >
         <div className={styles['logo']}>birthplace</div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            角色管理
-          </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            nav 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            nav 3
-          </Menu.Item>
-          <Menu.Item key="4" icon={<UserOutlined />}>
-            nav 4
-          </Menu.Item>
-        </Menu>
+        <MenuList></MenuList>
       </Sider>
       <Layout>
         <Header className={styles['site-layout-sub-header-background']}>
           <Dropdown
             placement="bottomCenter"
             arrow
+            trigger="click"
             overlay={
               <Menu
                 onClick={data => {
-                  console.log(data);
                   message.info(`Click on item ${data.key}`);
                   if (data.key === 'logout') {
                     window.localStorage.removeItem('Token');

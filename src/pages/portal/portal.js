@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'dva';
+import { connect } from 'umi';
 import styles from './portal.less';
 import { Button, message, Table } from 'antd';
 import AddRole from './component/addRole';
@@ -13,13 +13,20 @@ class PortalPage extends React.Component {
   componentDidMount() {
     //组件将要渲染时拿到默认的一页多少条和当前页这些数据
     // console.log(process.env.API_ENV);
-    this.buttonClick();
+    this.getRoleRequest();
   }
 
-  buttonClick = () => {
+  getRoleRequest = () => {
     this.props.dispatch({
       type: 'portalModel/getRole',
       payload: null,
+    });
+  };
+
+  addRoleRequest = values => {
+    this.props.dispatch({
+      type: 'portalModel/addRole',
+      payload: values,
     });
   };
 
@@ -53,7 +60,7 @@ class PortalPage extends React.Component {
     ];
     return (
       <div>
-        <AddRole></AddRole>
+        <AddRole addRoleRequest={this.addRoleRequest}></AddRole>
         <Table
           dataSource={roleData}
           columns={columns}

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { connect } from 'dva';
 import styles from './register.less';
 import { PhoneOutlined, LockOutlined } from '@ant-design/icons';
-import { Link } from 'umi';
-import { debounce } from 'lodash';
+import { Link, connect } from 'umi';
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
       codeLoading: false,
-      mobile: '',
       code: '',
     };
   }
@@ -68,26 +65,20 @@ class Register extends Component {
   //   }
   // }
 
-  setMobile(e) {
-    debounce(() => {
-      this.setState({ mobile: e.target.value });
-    }, 300)();
-  }
-  changeMobile = e => {
-    e.persist();
-    console.log(e, 'e');
-    this.setMobile(e);
-  };
-
   getCode = () => {
-    this.props.dispatch({
-      type: 'getVertificationCode/getCode',
-      payload: { mobile: this.state.mobile },
-    });
+    this.formRef.current
+      ?.validateFields(['mobile'])
+      .then(values => {
+        this.props.dispatch({
+          type: 'getVertificationCode/getCode',
+          payload: values,
+        });
+      })
+      .catch(errorInfo => {});
   };
 
   render() {
-    const { codeLoading, code, mobile } = this.state;
+    const { codeLoading, code } = this.state;
     /* 重置code值 */
     this.formRef.current?.setFieldsValue({ code: code });
     return (
@@ -102,16 +93,21 @@ class Register extends Component {
           onFinishFailed={e => this.onFinishFailed(e)}
         >
           <Form.Item
+            className={styles['mobile']}
             name="mobile"
-            rules={[{ required: true, message: 'Please input your Mobile!' }]}
-            onChange={this.changeMobile}
+            rules={[
+              {
+                required: true,
+                message: '请正确填写手机号!',
+                pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+              },
+            ]}
           >
             <Input
               prefix={
                 <PhoneOutlined className={styles['site-form-item-icon']} />
               }
-              value={mobile}
-              placeholder="Please input your Mobile"
+              placeholder="Please input your Mobile!"
             />
           </Form.Item>
           <Form.Item

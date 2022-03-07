@@ -1,10 +1,8 @@
 import React from 'react';
-import { connect } from 'dva';
 import styles from './login.less';
 import { Form, Input, Button, Checkbox, Radio } from 'antd';
 import { PhoneOutlined, LockOutlined } from '@ant-design/icons';
-import { Link } from 'umi';
-import { debounce } from 'lodash';
+import { connect, Link } from 'umi';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +11,6 @@ class Login extends React.Component {
     this.state = {
       type: '0',
       codeLoading: false,
-      mobile: '',
       code: '',
     };
   }
@@ -56,24 +53,19 @@ class Login extends React.Component {
     });
   };
   getCode = () => {
-    this.props.dispatch({
-      type: 'getVertificationCode/getCode',
-      payload: { mobile: this.state.mobile },
-    });
-  };
-  setMobile(e) {
-    debounce(() => {
-      this.setState({ mobile: e.target.value });
-    }, 300)();
-  }
-  changeMobile = e => {
-    e.persist();
-    console.log(e, 'e');
-    this.setMobile(e);
+    this.formRef.current
+      ?.validateFields(['mobile'])
+      .then(values => {
+        this.props.dispatch({
+          type: 'getVertificationCode/getCode',
+          payload: values,
+        });
+      })
+      .catch(errorInfo => {});
   };
 
   render() {
-    const { type, codeLoading, code, mobile } = this.state;
+    const { type, codeLoading, code } = this.state;
     /* 重置code值 */
     this.formRef.current?.setFieldsValue({ code: code });
     return (
@@ -102,14 +94,18 @@ class Login extends React.Component {
           <Form.Item
             className={styles['mobile']}
             name="mobile"
-            rules={[{ required: true, message: 'Please input your Mobile!' }]}
-            onChange={this.changeMobile}
+            rules={[
+              {
+                required: true,
+                message: '请正确填写手机号!',
+                pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+              },
+            ]}
           >
             <Input
               prefix={
                 <PhoneOutlined className={styles['site-form-item-icon']} />
               }
-              value={mobile}
               placeholder="Mobile"
             />
           </Form.Item>
