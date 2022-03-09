@@ -14,6 +14,13 @@ export const addRole = async params => {
   });
 };
 
+export const deleteRole = async params => {
+  return request(`/api/roleDelete`, {
+    method: 'POST',
+    data: params,
+  });
+};
+
 export const getMenuList = async params => {
   return request(`/api/adminMenuList`, {
     method: 'GET',

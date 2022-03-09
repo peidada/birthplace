@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'umi';
 import styles from './portal.less';
-import { Button, message, Table } from 'antd';
+import { Popconfirm, Space, Table } from 'antd';
 import AddRole from './component/addRole';
 
 class PortalPage extends React.Component {
@@ -30,8 +30,11 @@ class PortalPage extends React.Component {
     });
   };
 
-  addRole = () => {
-    message.error('啥也想新增？猪脑子？');
+  deleteRoleRequest = values => {
+    this.props.dispatch({
+      type: 'portalModel/deleteRole',
+      payload: values.id,
+    });
   };
 
   render() {
@@ -56,6 +59,22 @@ class PortalPage extends React.Component {
         title: '状态',
         dataIndex: 'status',
         key: 'status',
+      },
+      {
+        title: '操作',
+        key: 'id',
+        render: record => (
+          <Space size="middle">
+            <Popconfirm
+              title="Are you sure？"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() => this.deleteRoleRequest(record)}
+            >
+              <a>删除</a>
+            </Popconfirm>
+          </Space>
+        ),
       },
     ];
     return (

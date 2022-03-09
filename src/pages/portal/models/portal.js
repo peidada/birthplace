@@ -36,6 +36,16 @@ export default {
         message.error(response.message);
       }
     },
+    *deleteRole({ payload }, { call, put }) {
+      const response = yield call(services.deleteRole, payload);
+      if (response.code == 1) {
+        yield put({
+          type: 'getRole',
+        });
+      } else {
+        message.error(response.message);
+      }
+    },
   },
 
   reducers: {
