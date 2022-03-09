@@ -23,7 +23,27 @@ export default {
           payload: response.data,
         });
       } else {
-        message.error(response.data.meg);
+        message.error(response.message);
+      }
+    },
+    *addRole({ payload }, { call, put }) {
+      const response = yield call(services.addRole, payload);
+      if (response.code == 1) {
+        yield put({
+          type: 'getRole',
+        });
+      } else {
+        message.error(response.message);
+      }
+    },
+    *deleteRole({ payload }, { call, put }) {
+      const response = yield call(services.deleteRole, payload);
+      if (response.code == 1) {
+        yield put({
+          type: 'getRole',
+        });
+      } else {
+        message.error(response.message);
       }
     },
   },

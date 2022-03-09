@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'dva';
+import { connect } from 'umi';
 import styles from './portal.less';
-import { Button, message, Table } from 'antd';
+import { Popconfirm, Space, Table } from 'antd';
 import AddRole from './component/addRole';
 
 class PortalPage extends React.Component {
@@ -13,18 +13,28 @@ class PortalPage extends React.Component {
   componentDidMount() {
     //组件将要渲染时拿到默认的一页多少条和当前页这些数据
     // console.log(process.env.API_ENV);
-    this.buttonClick();
+    this.getRoleRequest();
   }
 
-  buttonClick = () => {
+  getRoleRequest = () => {
     this.props.dispatch({
       type: 'portalModel/getRole',
       payload: null,
     });
   };
 
-  addRole = () => {
-    message.error('啥也想新增？猪脑子？');
+  addRoleRequest = values => {
+    this.props.dispatch({
+      type: 'portalModel/addRole',
+      payload: values,
+    });
+  };
+
+  deleteRoleRequest = values => {
+    this.props.dispatch({
+      type: 'portalModel/deleteRole',
+      payload: values.id,
+    });
   };
 
   render() {
@@ -50,10 +60,26 @@ class PortalPage extends React.Component {
         dataIndex: 'status',
         key: 'status',
       },
+      {
+        title: '操作',
+        key: 'id',
+        render: record => (
+          <Space size="middle">
+            <Popconfirm
+              title="Are you sure？"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() => this.deleteRoleRequest(record)}
+            >
+              <a>删除</a>
+            </Popconfirm>
+          </Space>
+        ),
+      },
     ];
     return (
       <div>
-        <AddRole></AddRole>
+        <AddRole addRoleRequest={this.addRoleRequest}></AddRole>
         <Table
           dataSource={roleData}
           columns={columns}

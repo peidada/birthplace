@@ -1,36 +1,38 @@
-import * as services from '@/services/login';
+import * as services from '@/services/portal';
 import { message } from 'antd';
 
 export default {
-  namespace: 'getVertificationCode',
+  namespace: 'menuListModel',
+
   state: {
-    code: '',
+    menuList: [],
   },
+
   subscriptions: {
     setup({ dispatch, history }) {
       // eslint-disable-line
     },
   },
+
   effects: {
-    *getCode({ payload }, { call, put }) {
-      const response = yield call(services.getCode, payload);
+    *getMenuList({ payload }, { call, put }) {
+      const response = yield call(services.getMenuList);
       if (response.code == 1) {
         yield put({
-          type: 'saveCode',
+          type: 'saveMenuList',
           payload: response.data,
         });
-        message.success('获取验证码成功');
       } else {
         message.error(response.message);
       }
     },
   },
+
   reducers: {
-    saveCode(state, action) {
-      console.log(action);
+    saveMenuList(state, action) {
       return {
         ...state,
-        code: action.payload,
+        menuList: action.payload,
       };
     },
   },
