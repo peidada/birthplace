@@ -59,7 +59,7 @@ export default defineConfig({
   hash: true, //开启打包文件的hash值后缀,
   proxy: {
     '/api': {
-      target: 'http://39.106.3.240:8080/',
+      target: 'http://39.106.3.240:8070/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },

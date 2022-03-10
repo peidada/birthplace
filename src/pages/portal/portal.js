@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'umi';
 import styles from './portal.less';
-import { Popconfirm, Space, Table } from 'antd';
+import { message, Popconfirm, Space, Table } from 'antd';
 import AddRole from './component/addRole';
 
 class PortalPage extends React.Component {
@@ -33,8 +33,12 @@ class PortalPage extends React.Component {
   deleteRoleRequest = values => {
     this.props.dispatch({
       type: 'portalModel/deleteRole',
-      payload: values.id,
+      payload: { id: values.id },
     });
+  };
+
+  editRoleClick = values => {
+    message.success(values.id);
   };
 
   render() {
@@ -66,13 +70,14 @@ class PortalPage extends React.Component {
         render: record => (
           <Space size="middle">
             <Popconfirm
-              title="Are you sure？"
+              title="确定删除吗？"
               okText="Yes"
               cancelText="No"
               onConfirm={() => this.deleteRoleRequest(record)}
             >
               <a>删除</a>
             </Popconfirm>
+            <a onClick={() => this.editRoleClick(record)}>编辑</a>
           </Space>
         ),
       },

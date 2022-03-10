@@ -46,6 +46,16 @@ export default {
         message.error(response.message);
       }
     },
+    *editRole({ payload }, { call, put }) {
+      const response = yield call(services.editRole, payload);
+      if (response.code == 1) {
+        yield put({
+          type: 'getRole',
+        });
+      } else {
+        message.error(response.message);
+      }
+    },
   },
 
   reducers: {
