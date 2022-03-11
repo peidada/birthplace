@@ -32,6 +32,7 @@ export default {
         yield put({
           type: 'getRole',
         });
+        message.success(response.message);
       } else {
         message.error(response.message);
       }
@@ -42,6 +43,7 @@ export default {
         yield put({
           type: 'getRole',
         });
+        message.success(response.message);
       } else {
         message.error(response.message);
       }
@@ -52,6 +54,7 @@ export default {
         yield put({
           type: 'getRole',
         });
+        message.success(response.message);
       } else {
         message.error(response.message);
       }

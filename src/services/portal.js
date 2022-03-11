@@ -15,7 +15,7 @@ export const addRole = async params => {
 };
 
 export const deleteRole = async params => {
-  return request(`/api/roleDelete`, {
+  return request(`/api/roleDel`, {
     method: 'POST',
     data: params,
   });
