@@ -25,19 +25,6 @@ export default defineConfig({
       },
     });
   },
-  //配置 externals 还能减小编译消耗
-  // externals: {
-  //   react: 'window.React',
-  //   'react-dom': 'window.ReactDOM',
-  //   moment: 'window.moment',
-  //   antd: 'window.antd',
-  // },
-  scripts: [
-    'https://cdn.bootcdn.net/ajax/libs/react/17.0.1/umd/react.development.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/react-dom/17.0.1/umd/react-dom.production.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/antd/4.8.2/antd.min.js',
-  ],
   //样式生效必须写在styles里面
   styles: ['https://cdnjs.cloudflare.com/ajax/libs/antd/4.8.2/antd.min.css'],
   dva: {},
@@ -72,7 +59,7 @@ export default defineConfig({
   hash: true, //开启打包文件的hash值后缀,
   proxy: {
     '/api': {
-      target: 'http://39.106.3.240:8080/',
+      target: 'http://39.106.3.240:8070/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },

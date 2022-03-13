@@ -29,6 +29,19 @@ export default {
         message.error(response.message);
       }
     },
+    *login({ payload }, { call, put }) {
+      const response = yield call(services.login, payload);
+      if (response.code === 1) {
+        yield put({
+          type: 'save',
+          payload: response.data.token,
+        });
+        localStorage.setItem('Token', response.data.token);
+        history.push('/');
+      } else {
+        message.error(response.message);
+      }
+    },
   },
 
   reducers: {
